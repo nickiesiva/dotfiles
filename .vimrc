@@ -19,7 +19,7 @@ Plug 'wakatime/vim-wakatime' " integrate with wakatime
 Plug 'dbext.vim' " integrate with DB
 Plug 'scrooloose/nerdtree' 
 Plug 'myusuf3/numbers.vim' " better numbering
-" Plug 'valloric/youcompleteme' " autocomplete
+"Plug 'valloric/youcompleteme' " autocomplete
 Plug 'easymotion/vim-easymotion' 
 
 " Appearances
@@ -31,7 +31,7 @@ Plug 'jonathanfilip/vim-lucius' " Lucius Colorscheme
 Plug 'itchyny/landscape.vim' " Colorscheme and airline
 Plug 'noahfrederick/vim-hemisu'
 Plug 'itchyny/lightline.vim' " statusline
-Plug 'Lokaltog/vim-powerline' " for better symbol statusline
+"Plug 'Lokaltog/vim-powerline' " for better symbol statusline
 
 " Language Specifics
 "Plug 'vim-ruby/vim-ruby' " Ruby
@@ -41,10 +41,13 @@ Plug 'Lokaltog/vim-powerline' " for better symbol statusline
 "Plug 'evanmiller/nginx-vim-syntax' " Nginx
 "Plug 'briancollins/vim-jst' " for ejs
 "Plug 'mxw/vim-jsx' " for jsx (react)
+"Plug 'Quramy/tsuquyomi' " typescript tools
+Plug 'leafgarland/typescript-vim' " typescript
 
 " Others
 Plug 'nhooyr/env.vim' " lightline dependency
 Plug 'SirVer/ultisnips' " snipets
+"Plug 'Shougo/vimproc.vim' 
 
 call plug#end()
 
@@ -59,7 +62,7 @@ scriptencoding utf-8
 
 " Whitespaces
 set nowrap 			" don't wrap lines
-set tabstop=2 softtabstop=2 shiftwidth=2	" a tab is two spaces
+set tabstop=4 softtabstop=4 shiftwidth=4	" a tab is two spaces
 set expandtab			" use spaces, not tabs (optional)
 set backspace=indent,eol,start	" backspace through everything in insert mode
 
@@ -90,10 +93,10 @@ set laststatus=2
 set noshowmode
 set number
 
-colorscheme  lucius
-
 let g:solarized_termcolors=256      " use solarized 256 fallback
 let g:Powerline_symbols = 'fancy'
+
+colorscheme  lucius
 
 " Lightline configs (statusline)
 let g:lightline = {
@@ -124,7 +127,7 @@ function! LightLineModified()
 endfunction
 
 function! LightLineReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '' : ''
 endfunction
 
 function! LightLineFilename()
@@ -139,7 +142,7 @@ endfunction
 function! LightLineFugitive()
   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
     let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
+    return strlen(_) ? ' '._ : ''
   endif
   return ''
 endfunction
@@ -166,7 +169,7 @@ autocmd User GoyoLeave Limelight!
 
 " Autocommands
 if has('autocmd')
-  autocmd bufwritepost .vimrc source $MYVIMRC " source .vimrc file after saving it
+  " autocmd bufwritepost .vimrc source $MYVIMRC " source .vimrc file after saving it
   " Open markdown files with Chrome.
   autocmd BufEnter *.md exe 'nnoremap <leader>p :!chromium%:p<CR>'
 endif
