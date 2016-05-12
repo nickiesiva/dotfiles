@@ -1,12 +1,15 @@
-"General
-
+"""""""""""
+" General "
+"""""""""""
 set nocompatible " choose no compability wih legacy vi
 
 filetype off
 
 call plug#begin('~/.vim/plugged')
 
-" Utilities
+"""""""""""""
+" Utilities "
+"""""""""""""
 Plug 'kien/ctrlp.vim' " Fuzzy file finder
 Plug 'tpope/vim-surround' " surround everything
 Plug 'tComment' " comments
@@ -19,10 +22,19 @@ Plug 'wakatime/vim-wakatime' " integrate with wakatime
 Plug 'dbext.vim' " integrate with DB
 Plug 'scrooloose/nerdtree' 
 Plug 'myusuf3/numbers.vim' " better numbering
-"Plug 'valloric/youcompleteme' " autocomplete
 Plug 'easymotion/vim-easymotion' 
+Plug 'ervandew/supertab' " manage tab (YCM and ultisnips combo)
 
-" Appearances
+"""""""""""""""""""""""""
+" Snippet/ Autocomplete "
+"""""""""""""""""""""""""
+Plug 'Valloric/YouCompleteMe' " autocomplete
+Plug 'SirVer/ultisnips' " snippets engine
+Plug 'honza/vim-snippets' " snippets
+
+"""""""""""""""
+" Appearances "
+"""""""""""""""
 Plug 'drmikehenry/vim-fontsize' " for fontsize in gvim
 Plug 'chriskempson/base16-vim' " base16 theme
 Plug 'junegunn/goyo.vim' " Distraction free
@@ -33,7 +45,11 @@ Plug 'noahfrederick/vim-hemisu'
 Plug 'itchyny/lightline.vim' " statusline
 "Plug 'Lokaltog/vim-powerline' " for better symbol statusline
 
-" Language Specifics
+""""""""""""""""""""""
+" Language Specifics "
+""""""""""""""""""""""
+Plug 'leafgarland/typescript-vim' " typescript
+Plug 'posva/vim-vue' " vuejs
 "Plug 'vim-ruby/vim-ruby' " Ruby
 "Plug 'tpope/vim-rails' " Rails
 "Plug 'tpope/vim-bundler' " Bundler Gem
@@ -42,11 +58,11 @@ Plug 'itchyny/lightline.vim' " statusline
 "Plug 'briancollins/vim-jst' " for ejs
 "Plug 'mxw/vim-jsx' " for jsx (react)
 "Plug 'Quramy/tsuquyomi' " typescript tools
-Plug 'leafgarland/typescript-vim' " typescript
 
-" Others
+""""""""""
+" Others "
+""""""""""
 Plug 'nhooyr/env.vim' " lightline dependency
-Plug 'SirVer/ultisnips' " snipets
 "Plug 'Shougo/vimproc.vim' 
 
 call plug#end()
@@ -60,19 +76,43 @@ set showcmd			" display incomplete commands
 
 scriptencoding utf-8
 
-" Whitespaces
+"""""""""""""""
+" Whitespaces "
+"""""""""""""""
 set nowrap 			" don't wrap lines
 set tabstop=4 softtabstop=4 shiftwidth=4	" a tab is two spaces
 set expandtab			" use spaces, not tabs (optional)
 set backspace=indent,eol,start	" backspace through everything in insert mode
 
-" Searching
+"""""""""""""
+" Searching " 
+"""""""""""""
 set hlsearch			" highlight matches
 set incsearch			" incremental searching
 set ignorecase			" searches are case sensitive...
 set smartcase			" ...unless they contain at least one capital letter
 
-" Tags & Navigations
+""""""""""""""""""""
+" Snippets setting "
+""""""""""""""""""""
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<c-n>"
+" let g:UltiSnipsJumpForwardTrigger="<c-s>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-s>" I am thinking of this keybinding.
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+""""""""""""""""""""""
+" Tags & Navigations "
+""""""""""""""""""""""
 set tags=./tags,./gems.tags;
 
 let g:ctrlp_extensions = ['tag']
@@ -86,7 +126,10 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-" Appereances
+"""""""""""""""
+" Appereances "
+"""""""""""""""
+" General appereances
 set t_Co=256 " force vim to use 256 color
 set background=dark " use dark as default
 set laststatus=2
@@ -167,14 +210,18 @@ endfunction
 autocmd User GoyoEnter Limelight
 autocmd User GoyoLeave Limelight!
 
-" Autocommands
+""""""""""""""""
+" Autocommands "
+""""""""""""""""
 if has('autocmd')
   " autocmd bufwritepost .vimrc source $MYVIMRC " source .vimrc file after saving it
   " Open markdown files with Chrome.
   autocmd BufEnter *.md exe 'nnoremap <leader>p :!chromium%:p<CR>'
 endif
 
-" gvim setup
+""""""""""""""
+" GVim Setup "
+""""""""""""""
 if has('gui_running')
   colorscheme  base16-eighties
   set guifont=Monofour\ for\ Powerline\ 11 " set default font to Source Code Pro 11
@@ -185,22 +232,27 @@ if has('gui_running')
   set guioptions-=m  " remove menu
 endif
 
-" mapping
+"""""""""""""""""""""""
+" Mapping/ Keybinding "
+"""""""""""""""""""""""
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
 map <C-k> :bp<CR>
 map <C-j> :bn<CR>
 map <C-t> :tabnew<CR>
 
-nnoremap <F2> :NERDTreeToggle<CR>
-nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F2> :NERDTree<CR>
+nnoremap <F3> :NERDTreeClose<CR>
+nnoremap <F4> :NumbersToggle<CR>
 nnoremap <F5> :buffers<CR>
 nnoremap <F8> :set nu<CR>
 nnoremap <F9> :set cursorline cursorcolumn<CR>
 nnoremap <F10> :set nocursorline nocursorcolumn<CR>
 
-" Others
-" :set mouse=a
-":set noswapfile
+""""""""""
+" Others "
+""""""""""
 :set nobackup
 :set nowritebackup
+" :set mouse=a
+":set noswapfile
