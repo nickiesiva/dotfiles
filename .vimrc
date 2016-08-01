@@ -24,6 +24,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'myusuf3/numbers.vim' " better numbering
 Plug 'easymotion/vim-easymotion' 
 Plug 'ervandew/supertab' " manage tab (YCM and ultisnips combo)
+" Plug 'tpope/vim-dispatch' " omnisharp dependencies
+" Plug 'scrooloose/syntastic'
 
 """""""""""""""""""""""""
 " Snippet/ Autocomplete "
@@ -254,5 +256,18 @@ nnoremap <F10> :set nocursorline nocursorcolumn<CR>
 """"""""""
 :set nobackup
 :set nowritebackup
+" set shell=/bin/bash
 " :set mouse=a
-":set noswapfile
+:set noswapfile
+
+" execute pathogen#infect()
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+"
+" let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
