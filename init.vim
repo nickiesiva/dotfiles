@@ -11,20 +11,22 @@ call plug#begin('~/.vim/plugged')
 " Utilities "
 """""""""""""
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'tComment' " comments
-Plug 'taglist.vim' " list tags
+Plug 'vim-scripts/tComment' " comments
+Plug 'vim-scripts/taglist.vim' " list tags
 Plug 'tpope/vim-fugitive' " for git status
 Plug 'rking/ag.vim' " ag for faster search
 Plug 'KabbAmine/zeavim.vim' " integrate with zeal
 Plug 'wakatime/vim-wakatime' " integrate with wakatime
-Plug 'dbext.vim' " integrate with DB
+" Plug 'dbext.vim' " integrate with DB
 Plug 'scrooloose/nerdtree' " nerdtree
 Plug 'myusuf3/numbers.vim' " better numbering
 Plug 'easymotion/vim-easymotion' 
 Plug 'ervandew/supertab' " manage tab (YCM and ultisnips combo)
 Plug 'majutsushi/tagbar' " tagbar
 Plug 'jiangmiao/auto-pairs' " close brackets automatically
-Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " deoplete-go dependency
+Plug 'edkolev/tmuxline.vim'
+Plug 'zivyangll/git-blame.vim' " git blame
+" Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " deoplete-go dependency
 
 """""""""""""""""""""""""
 " Snippet/ Autocomplete "
@@ -32,7 +34,7 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips' " snippets engine
 Plug 'honza/vim-snippets' " snippets
-Plug 'zchee/deoplete-go', { 'do': 'make'} " deoplete for golang
+" Plug 'zchee/deoplete-go', { 'do': 'make'} " deoplete for golang
 
 """""""""""""""
 " Appearances "
@@ -45,12 +47,15 @@ Plug 'jonathanfilip/vim-lucius' " Lucius Colorscheme
 Plug 'itchyny/landscape.vim' " Colorscheme and airline
 Plug 'noahfrederick/vim-hemisu'
 Plug 'itchyny/lightline.vim' " statusline
+Plug 'drewtempelmeyer/palenight.vim'
 
 """"""""""""""""""""""
 " Language Specifics "
 """"""""""""""""""""""
 Plug 'fatih/vim-go' "vim go
-Plug 'garyburd/go-explorer'
+Plug 'slim-template/vim-slim' " support slim template engine syntax
+Plug 'figitaki/vim-dune' " support jbuilder syntax
+" Plug 'garyburd/go-explorer'
 
 """"""""""
 " Unused "
@@ -81,7 +86,7 @@ scriptencoding utf-8
 " Whitespaces "
 """""""""""""""
 set nowrap 			" don't wrap lines
-set tabstop=4 softtabstop=4 shiftwidth=4	" a tab is two spaces
+set tabstop=2 softtabstop=2 shiftwidth=2	" a tab is two spaces
 set expandtab			" use spaces, not tabs (optional)
 set backspace=indent,eol,start	" backspace through everything in insert mode
 
@@ -264,6 +269,7 @@ nnoremap <F5> :buffers<CR>
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <F9> :set cursorline cursorcolumn<CR>
 nnoremap <F10> :set nocursorline nocursorcolumn<CR>
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR><Paste>
 
 """""""""""""""
 " Deoplete-GO "
@@ -287,7 +293,7 @@ let g:deoplete#sources#go#use_cache = 1
 " python3 "
 """""""""""
 " Path to python interpreter for neovim
-let g:python3_host_prog  = '/usr/bin/python3'
+let g:python3_host_prog  = '/usr/local/bin/python3'
 
 " Skip the check of neovim module
 let g:python3_host_skip_check = 1
@@ -300,6 +306,8 @@ let g:python_host_skip_check = 1
 :set nobackup
 :set nowritebackup
 :set noswapfile
+:set noeol
+:set binary
 
 set laststatus=2
 set noshowmode
@@ -318,3 +326,20 @@ set number
 " let g:syntastic_check_on_wq = 0
 "
 " let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
+"
+" Close Tabs Script
+function! TabCloseRight(bang)
+    let cur=tabpagenr()
+    while cur < tabpagenr('$')
+        exe 'tabclose' . a:bang . ' ' . (cur + 1)
+    endwhile
+endfunction
+
+function! TabCloseLeft(bang)
+    while tabpagenr() > 1
+        exe 'tabclose' . a:bang . ' 1'
+    endwhile
+endfunction
+
+command! -bang Tabcloseright call TabCloseRight('<bang>')
+command! -bang Tabcloseleft call TabCloseLeft('<bang>')
