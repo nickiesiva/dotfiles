@@ -13,20 +13,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'vim-scripts/tComment' " comments
 Plug 'vim-scripts/taglist.vim' " list tags
-Plug 'tpope/vim-fugitive' " for git status
 Plug 'rking/ag.vim' " ag for faster search
-Plug 'KabbAmine/zeavim.vim' " integrate with zeal
-Plug 'wakatime/vim-wakatime' " integrate with wakatime
-" Plug 'dbext.vim' " integrate with DB
 Plug 'scrooloose/nerdtree' " nerdtree
 Plug 'myusuf3/numbers.vim' " better numbering
-Plug 'easymotion/vim-easymotion' 
 Plug 'ervandew/supertab' " manage tab (YCM and ultisnips combo)
 Plug 'majutsushi/tagbar' " tagbar
 Plug 'jiangmiao/auto-pairs' " close brackets automatically
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 Plug 'zivyangll/git-blame.vim' " git blame
-" Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' } " deoplete-go dependency
+Plug 'itchyny/vim-gitbranch'
 
 """""""""""""""""""""""""
 " Snippet/ Autocomplete "
@@ -34,7 +29,6 @@ Plug 'zivyangll/git-blame.vim' " git blame
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips' " snippets engine
 Plug 'honza/vim-snippets' " snippets
-" Plug 'zchee/deoplete-go', { 'do': 'make'} " deoplete for golang
 
 """""""""""""""
 " Appearances "
@@ -47,15 +41,14 @@ Plug 'jonathanfilip/vim-lucius' " Lucius Colorscheme
 Plug 'itchyny/landscape.vim' " Colorscheme and airline
 Plug 'noahfrederick/vim-hemisu'
 Plug 'itchyny/lightline.vim' " statusline
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'mhinz/vim-startify'
 
 """"""""""""""""""""""
 " Language Specifics "
 """"""""""""""""""""""
-Plug 'fatih/vim-go' "vim go
 Plug 'slim-template/vim-slim' " support slim template engine syntax
 Plug 'figitaki/vim-dune' " support jbuilder syntax
-" Plug 'garyburd/go-explorer'
+Plug 'vim-ruby/vim-ruby'
 
 """"""""""
 " Unused "
@@ -80,15 +73,22 @@ syntax enable
 set encoding=utf-8
 set showcmd			" display incomplete commands
 
-scriptencoding utf-8
+" scriptencoding utf-8
 
 """""""""""""""
 " Whitespaces "
 """""""""""""""
+
+" set sw=1 sts=2 sr noet ai si
+" set expandtab
+set shiftwidth=2 expandtab    "Indent by 2 spaces when using >>, <<, == etc.
+set softtabstop=2 expandtab  "Indent by 2 spaces when pressing <TAB>
+set autoindent      "Keep indentation from previous line
+set smartindent     "Automatically inserts indentation in some cases
+set cindent         "Like smartindent, but stricter and more customisable<Paste>
 set nowrap 			" don't wrap lines
-set tabstop=2 softtabstop=2 shiftwidth=2	" a tab is two spaces
-set expandtab			" use spaces, not tabs (optional)
-set backspace=indent,eol,start	" backspace through everything in insert mode
+" set backspace=indent,eol,start	" backspace through everything in insert mode
+" set clipboard+=unnamedplus
 
 """""""""""""
 " Searching " 
@@ -118,14 +118,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " ------------------
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd', 'go']
 
 """"""""""""""""""""""
 " Tags & Navigations "
